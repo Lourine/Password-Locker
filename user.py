@@ -12,4 +12,4 @@ class User:
     """
     Save User Method saves a new user to the User_List
     """
-    User.user_List.append(self)
+    User.user_list.append(self)
