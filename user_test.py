@@ -1,5 +1,5 @@
 import unittest # Importing the unittest module
-from user import User # Importing the user class
+from user import User, Credentials# Importing the user and credential  class
 class TestUser(unittest.TestCase):
     '''
     Test class that defines test cases for the user class behaviours.
@@ -67,6 +67,24 @@ class TestUser(unittest.TestCase):
       self.assertTrue(user_exists)
 
 
+class TestCredentials(unittest.TestCase):
+    """
+    A test class that defines test cases for credentials class
+
+    """ 
+    def setUp(self):
+        """
+        Method that runs before each individual credentials test methods run.
+
+        """
+        self.new_credential = Credentials('Youtube','Millicent','1994milly')
+    def test_init(self):
+        """
+        Test case to check if a new Credentials instance has been initialized correctly
+        """
+        self.assertEqual(self.new_credential.account,'Youtube')
+        self.assertEqual(self.new_credential.userName,'Millicent')
+        self.assertEqual(self.new_credential.password,'1994milly')
 
 if __name__ == '__main__':
     unittest.main()
