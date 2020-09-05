@@ -10,6 +10,18 @@ class User:
   
   def save_user(self):
     """
-    Save User Method saves a new user to the User_List
+    Save User Method saves a new user to the user_List
     """
     User.user_list.append(self)
+  
+  def delete_user(self):
+    '''
+    delete_user method deletes a saved user from the user_list
+    '''
+    User.user_list.remove(self)
+
+  
+  @classmethod
+  def display_user(cls):
+    return cls.user_list
+
