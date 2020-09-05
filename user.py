@@ -40,13 +40,20 @@ class User:
 
 #Create the 2nd class
 class Credentials():
-  """
-  Create credentials class to help create new objects of credentials
     """
-  def __init__(self,account,userName, password):
+    Create credentials class to help create new objects of credentials
+    """
+    credentials_list = [] #empty credential list
+    def __init__(self,account,userName, password):
         """
         method that defines user credentials to be stored
         """
         self.account = account
         self.userName = userName
         self.password = password
+
+    def save_credentials(self):
+        """
+        method to store a new credential to the credentials list
+        """
+        Credentials.credentials_list.append(self)
