@@ -1,12 +1,10 @@
 import unittest # Importing the unittest module
 from user import User # Importing the user class
 class TestUser(unittest.TestCase):
-
     '''
     Test class that defines test cases for the user class behaviours.
-
     Args:
-        unittest.TestCase: TestCase class that helps in creating test cases
+    unittest.TestCase: TestCase class that helps in creating test cases
     '''
     def setUp(self):
         '''
@@ -42,7 +40,7 @@ class TestUser(unittest.TestCase):
             objects to our user_list
             '''
             self.new_user.save_user()
-            test_user = User("user","123re") # new user
+            test_user = User("user","1234") # new user
             test_user.save_user()
             self.assertEqual(len(User.user_list),2)
 
@@ -51,11 +49,23 @@ class TestUser(unittest.TestCase):
             test_delete_user to test if we can remove a user from our user list
             '''
             self.new_user.save_user()
-            test_user = User("user","012345678") # new user
+            test_user = User("user","1234") # new user
             test_user.save_user()
 
             self.new_user.delete_user()# Deleting a contact object
             self.assertEqual(len(User.user_list),1)
+
+    def test_user_exists(self):
+      '''
+      test to check if we can return a Boolean  if we cannot find the user.
+      '''
+      self.new_user.save_user()
+      test_user = User("user","1234") # new user
+      test_user.save_user()
+
+      user_exists = User.user_exist("user")
+      self.assertTrue(user_exists)
+
 
 
 if __name__ == '__main__':
