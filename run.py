@@ -1,5 +1,8 @@
 #!/usr/bin/env python3.6
 from user import User, Credentials
+import secrets
+import string
+
 def create_new_user(user_name,password):
     '''
     Function to create a new user with a username and password
@@ -62,13 +65,15 @@ def check_credentials(account):
 
     """
     return Credentials.if_credential_exist(account)
+def generate_password(psw_len):
+    '''
+    generate a new password
+    Args:
+    psw_len: preffered password length
+    '''
 
-def generate_Password():
-    '''
-    generates a random password for the user.
-    '''
-    auto_password=Credentials.generate_password()
-    return auto_password
+    return "".join(secrets.choice(string.ascii_letters+string.digits) for i in range(psw_len))
+
 def copy_credential(account):
     """
     A function that copies the password using the pyperclip framework
@@ -84,7 +89,7 @@ def main():
     print(f"Hello {user_name}, sign up to Pass Word Locker to create an account.")
     print('\n')
     while True:
-        print("Use these known short codes to operate :\n SU -> SIGN UP.\n DA -> Display your account.\n LG ->LOGIN.\n ex ->exit Pass Word Locker. ")
+        print("Use these known short codes to operate :\n SU -> SIGN UP.\n LG ->LOGIN.\n ex ->exit Pass Word Locker. ")
         short_code = input().lower()
         if short_code == 'su':
             print("Create a Pass Word Locker Account")
@@ -128,17 +133,20 @@ def main():
                         account = input().lower()
                         print("Your Account username")
                         userName = input()
-                        while True:
-                            print(" TP - To type your own pasword if you already have an account:\n GP - To generate random Password")
-                            password_Choice = input().lower().strip()
-                            if password_Choice == 'tp':
-                                password = input("Enter Your Own Password\n")
-                                break
-                            elif password_Choice == 'gp':
-                                password = generate_Password()
-                                break
-                            else:
-                                print("Invalid password please try again")
+                        print('Password: ')
+                        print('Would you like us to automatically generate you a password? y/n')
+                        ps = input().lower()
+                        if ps == 'y':
+                            print('Enter your preferred password length')
+                            ps_len = int(input())
+                            password = generate_password(ps_len)
+                            print(f'Your new password for {account} is {password}')
+                        elif ps == 'n':
+                            print('Create your password: ')
+                            password = input()
+
+                        else:
+                            print('Invalid choice!')
                         save_credentials(create_new_credential(account,userName,password))
                         print('\n')
                         print(f"Account Credential for: {account} - UserName: {userName} - Password:{password} created succesfully")
@@ -180,7 +188,8 @@ def main():
                             print("That Credential you want to delete does not exist in your store yet")
 
                     elif short_code == 'gp':
-                        password = generate_Password()
+                        ps_len = int(input())
+                        password = generate_password(ps_len)
                         print(f" {password} Has been generated succesfull. You can proceed to use it to your account")
 
                     elif short_code == 'cp':
@@ -197,8 +206,13 @@ def main():
                         break
                     else:
                         print("Wrong entry... Check your entry again and let it match those in the menu")
-                else:
-                        print("Please enter a valid input to continue")
+                
+        elif short_code == "ex":
+                    print(f"Thanks {user_name} for your time.I hope you enjoyed my service.Bye...")
+                    break    
+        else:
+            print("I really didn't get that. Please use the short codes")
+           
 
 if __name__ == '__main__':
     main()
