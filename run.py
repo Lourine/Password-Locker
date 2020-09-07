@@ -83,6 +83,7 @@ def copy_credential(account):
 
 
 
+
 def main():
     print("Hello Welcome to your Pass Word Locker. What is your name?")
     user_name = input()
@@ -124,7 +125,7 @@ def main():
                 print(f"Hello {default_username}.Welcome To PassWord Locker Manager")  
                 print('\n')
                 while True:
-                    print("Use these short codes:\n CC - Create a new credential \n DC - Display Credentials \n FC - Find a credential \n GP - Generate A randomn password \n CP - Copy Credentials \n D - Delete credential \n EX - Exit the application \n")
+                    print("Use these short codes:\n CC - Create a new credential \n DC - Display Credentials \n FC - Find a credential \n  CP - Copy Credentials \n D - Delete credential \n EX - Exit the application \n")
                     short_code = input().lower().strip()
                     if short_code == "cc":
                         print("Create New Credential")
@@ -132,7 +133,7 @@ def main():
                         print("Account name ....")
                         account = input().lower()
                         print("Your Account username")
-                        userName = input()
+                        username = input()
                         print('Password: ')
                         print('Would you like us to automatically generate you a password? y/n')
                         ps = input().lower()
@@ -147,17 +148,22 @@ def main():
 
                         else:
                             print('Invalid choice!')
-                        save_credentials(create_new_credential(account,userName,password))
+                        save_credentials(create_new_credential(account,username,password))
                         print('\n')
-                        print(f"Account Credential for: {account} - UserName: {userName} - Password:{password} created succesfully")
+                        print(f"Account Credential for: {account} - Username: {username} - Password:{password} created succesfully")
                         print('\n')
+                        handle = open("password.txt", "a")
+                        data = account + username + password
+                        handle.write(data)
+                        handle.close()
+                        print("\n")
                     elif short_code == "dc":
                         if display_accounts_details():
                             print("Here's your list of accounts: ")
                             print('*' * 30)
                             print('_'* 30)
                             for account in display_accounts_details():
-                                print(f" Account:{account.account} \n User Name:{userName}\n Password:{password}")
+                                print(f" Account:{account.account} \n User Name:{account.userName}\n Password:{account.password}")
                                 print('_'* 30)
                                 print('*' * 30)
                         else:
@@ -187,10 +193,7 @@ def main():
                         else:
                             print("That Credential you want to delete does not exist in your store yet")
 
-                    elif short_code == 'gp':
-                        ps_len = int(input())
-                        password = generate_password(ps_len)
-                        print(f" {password} Has been generated succesfull. You can proceed to use it to your account")
+                   
 
                     elif short_code == 'cp':
                             print('Enter the account of the credentials whose details you want to copy')
