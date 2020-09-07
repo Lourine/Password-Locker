@@ -83,7 +83,6 @@ def copy_credential(account):
 
 
 
-
 def main():
     print("Hello Welcome to your Pass Word Locker. What is your name?")
     user_name = input()
@@ -125,7 +124,7 @@ def main():
                 print(f"Hello {default_username}.Welcome To PassWord Locker Manager")  
                 print('\n')
                 while True:
-                    print("Use these short codes:\n CC - Create a new credential \n DC - Display Credentials \n FC - Find a credential \n  CP - Copy Credentials \n D - Delete credential \n EX - Exit the application \n")
+                    print("Use these short codes:\n CC - Create a new credential \n DC - Display Credentials \n FC - Find a credential \n CP - Copy Credentials \n D - Delete credential \n EX - Exit the application \n")
                     short_code = input().lower().strip()
                     if short_code == "cc":
                         print("Create New Credential")
@@ -149,13 +148,14 @@ def main():
                         else:
                             print('Invalid choice!')
                         save_credentials(create_new_credential(account,username,password))
+                        password_file = open('password.txt','a')
+                        password_file.write(f'\n Account Name: {account}, Password: {password}')
+                        password_file.close()
+
                         print('\n')
                         print(f"Account Credential for: {account} - Username: {username} - Password:{password} created succesfully")
                         print('\n')
-                        handle = open("password.txt", "a")
-                        data = account + username + password
-                        handle.write(data)
-                        handle.close()
+                        
                         print("\n")
                     elif short_code == "dc":
                         if display_accounts_details():
